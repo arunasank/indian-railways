@@ -1,7 +1,7 @@
 'use strict';
 
-//File to convert trains.json -> cleanTrains.json
-//Load geometries for stations from cleanStations.json
+//File to convert trains.json -> trainDetails.json
+//Load geometries for stations from stationsAndGeometries.json
 var _ = require('underscore');
 var jsonfile = require('jsonfile');
 
