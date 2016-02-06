@@ -3,6 +3,8 @@
 //File to convert stationsAndGeometries.json -> stations.geojson
 var _ = require('underscore');
 var jsonfile = require('jsonfile');
+var turfCentroid = require('turf-centroid');
+
 var trainStationsFile = '../data/stationsAndGeometries.json';
 var trainStations = jsonfile.readFileSync(trainStationsFile);
 
@@ -16,8 +18,9 @@ _.keys(trainStations).forEach(function (station) {
     };
 
     feature.properties.id = station;
-    feature.properties.geometry = trainStations[station];
-    fc.features.push(feature);
+    feature.geometry = trainStations[station];
+    //Some Stations are polygons, so convert them into points
+    fc.features.push((feature.geometry.type === 'Point') ? feature : turfCentroid(feature));
 });
 
 console.log(JSON.stringify(fc, null, 2));
