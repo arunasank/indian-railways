@@ -1,0 +1,11 @@
+{
+  "name": "indian-railways",
+  "version": "1.0.0",
+  "description": "Scripts and maps to analyse the Indian Railways Transit Data",
+  "author": "arunasank",
+  "license": "MIT",
+  "dependencies": {
+    "jsonfile": "^2.2.3",
+    "underscore": "^1.8.3"
+  }
+}
