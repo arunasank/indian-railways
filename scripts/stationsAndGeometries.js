@@ -1,6 +1,6 @@
 'use strict';
 
-//File to convert trains.json -> cleanTrains.json
+//File to convert trains.json -> stationsAndGeometries.json
 var _ = require('underscore');
 var jsonfile = require('jsonfile');
 var trainStationsFile = '../data/stations.geojson';
