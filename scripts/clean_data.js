@@ -1,15 +1,16 @@
 'use strict';
 
 //File to convert trains.json -> cleanTrains.json
+//Load geometries for stations from cleanStations.json
 var _ = require('underscore');
 var jsonfile = require('jsonfile');
 
-var file = '../data/trains.json';
-var trains2015 = jsonfile.readFileSync(file);
+var trainRoutes = jsonfile.readFileSync('../data/trains.json');
+var trainStations = jsonfile.readFileSync('../data/stationsAndGeometries.json');
 
 var cleanTrainsJSON = {};
 
-trains2015.forEach(function (train) {
+trainRoutes.forEach(function (train) {
 
     var station = {};
 
@@ -18,11 +19,15 @@ trains2015.forEach(function (train) {
         var cleanTrainObject = {};
         cleanTrainObject.id = train['Train No'][''];
         cleanTrainObject.name = train['train Name'];
-        cleanTrainObject.origin = train['source Station Name'];
-        cleanTrainObject.originCode = train['Source Station Code'];
-        cleanTrainObject.destination = train['Destination Station Name'];
-        cleanTrainObject.destinationCode = train['Destination station Code'];
+        cleanTrainObject.origin = {};
+        cleanTrainObject.origin.name = train['source Station Name'];
+        cleanTrainObject.origin.code = train['Source Station Code'];
+        cleanTrainObject.origin.geometry = trainStations[cleanTrainObject.origin.code];
 
+        cleanTrainObject.destination = {};
+        cleanTrainObject.destination.name = train['Destination Station Name'];
+        cleanTrainObject.destination.code = train['Destination station Code'];
+        cleanTrainObject.destination.geometry = trainStations[cleanTrainObject.destination.code];
 
         station.islno = train['islno'];
         station.code = train['station Code'];
@@ -30,6 +35,7 @@ trains2015.forEach(function (train) {
         station.arrival = train['Arrival time'];
         station.departure = train['Departure time'];
         station.distanceFromOrigin = train['Distance'];
+        station.geometry = trainStations[station.code];
 
         cleanTrainObject.stations = [];
         cleanTrainObject.stations.push(station);
@@ -44,6 +50,7 @@ trains2015.forEach(function (train) {
         station.arrival = train['Arrival time'];
         station.departure = train['Departure time'];
         station.distanceFromOrigin = train['Distance'];
+        station.geometry = trainStations[station.code];
         cleanTrainsJSON[train['Train No']['']].stations.push(station);
     }
 
