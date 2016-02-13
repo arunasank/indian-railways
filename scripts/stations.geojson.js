@@ -18,7 +18,7 @@ _.keys(trainStations).forEach(function (station) {
     };
 
     feature.properties.id = station;
-    feature.geometry = trainStations[station];
+    feature.geometry = trainStations[station].geometry;
     //Some Stations are polygons, so convert them into points
     fc.features.push((feature.geometry.type === 'Point') ? feature : turfCentroid(feature));
 });
