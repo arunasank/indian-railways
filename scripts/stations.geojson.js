@@ -17,6 +17,7 @@ _.keys(trainStations).forEach(function (station) {
         'properties': {}
     };
 
+    feature.properties.name = trainStations[station].name;
     feature.properties.id = station;
     feature.geometry = trainStations[station].geometry;
     //Some Stations are polygons, so convert them into points
